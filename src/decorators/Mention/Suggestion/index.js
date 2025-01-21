@@ -102,9 +102,16 @@ function getSuggestionComponent() {
       style: { left: 15 },
       activeOption: -1,
       showSuggestions: true,
+      initialOffset: 0,
     };
 
     componentDidMount() {
+      if (config.getEditorState()) {
+        const editorState = config.getEditorState();
+        this.setState({
+          initialOffset:  editorState.getSelection().focusOffset,
+        });
+      }
       const editorRect = config.getWrapperRef().getBoundingClientRect();
       const suggestionRect = this.suggestion.getBoundingClientRect();
       const dropdownRect = this.dropdown.getBoundingClientRect();
@@ -230,7 +237,7 @@ function getSuggestionComponent() {
       const mentionIndex = mentionIndexOnClick ?? editorState.getSelection().focusOffset - 1;
       
       if (selectedMention) {
-        addMention(editorState, onChange, separator, trigger, selectedMention, mentionIndex);
+        addMention(editorState, onChange, separator, trigger, selectedMention, mentionIndex, this.state.initialOffset - 1);
       }
     };
 
