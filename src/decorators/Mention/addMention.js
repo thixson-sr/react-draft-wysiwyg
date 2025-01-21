@@ -11,6 +11,7 @@ export default function addMention(
   trigger: string,
   suggestion: Object,
   mentionIndex: number,
+  initialOffset: Number,
 ): void {
   const { value, url } = suggestion;
   const entityKey = editorState
@@ -19,7 +20,6 @@ export default function addMention(
     .getLastCreatedEntityKey();
   const selectedBlock = getSelectedBlock(editorState);
   const selectedBlockText = selectedBlock.getText();
-  let initialOffset = editorState.getSelection().focusOffset;
   const beginningIndex = (selectedBlockText.lastIndexOf(separator + trigger, initialOffset) || 0) + 1
   const focusOffset = mentionIndex + 1;
 
