@@ -44,8 +44,8 @@ export default function addMention(
   if (!spaceAlreadyPresent) {
     // insert a blank space after mention
     updatedSelection = newEditorState.getSelection().merge({
-      anchorOffset: mentionIndex + value.length + trigger.length,
-      focusOffset: mentionIndex + value.length + trigger.length,
+      anchorOffset: newEditorState.getSelection().focusOffset,
+      focusOffset: newEditorState.getSelection().focusOffset,
     });
     newEditorState = EditorState.acceptSelection(newEditorState, updatedSelection);
     contentState = Modifier.insertText(
